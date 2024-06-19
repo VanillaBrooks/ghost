@@ -1,13 +1,23 @@
 use crate::prelude::*;
-use clap::Subcommand;
+use clap::{Subcommand, ValueEnum};
 
 #[derive(Debug, Parser)]
 #[command(version, about, long_about = "")]
 pub(crate) struct Args {
     pub(crate) name: String,
 
+    #[arg(short, long, default_value = "auto")]
+    pub(crate) runtime: ContainerRuntime,
+
     #[command(subcommand)]
     pub(crate) subcommand: Command,
+}
+
+#[derive(Debug, Clone, ValueEnum)]
+pub(crate) enum ContainerRuntime {
+    Podman,
+    Docker,
+    Auto,
 }
 
 #[derive(Debug, Subcommand)]
